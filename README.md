@@ -1,4 +1,4 @@
-# Terraform Practice Lab
+# Terraform Practice Labs
 
 ## Table of Contents
 

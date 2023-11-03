@@ -24,6 +24,7 @@ resource "aws_vpc" "vpc" {
     Terraform = "true"
   }
 }
+
 #Deploy the private subnets
 resource "aws_subnet" "private_subnets" {
   for_each = var.private_subnets
@@ -35,6 +36,7 @@ resource "aws_subnet" "private_subnets" {
     Terraform = "true"
   }
 }
+
 #Deploy the public subnets
 resource "aws_subnet" "public_subnets" {
   for_each = var.public_subnets
@@ -47,6 +49,7 @@ resource "aws_subnet" "public_subnets" {
     Terraform = "true"
   }
 }
+
 #Create route tables for public and private subnets
   resource "aws_route_table" "public_route_table" {
   vpc_id = aws_vpc.vpc.id
@@ -81,6 +84,7 @@ resource "aws_route_table" "private_route_table" {
   for_each = aws_subnet.public_subnets
   subnet_id = each.value.id
 }
+
 resource "aws_route_table_association" "private" {
   depends_on = [aws_subnet.private_subnets]
   route_table_id = aws_route_table.private_route_table.id
@@ -114,4 +118,3 @@ resource "aws_nat_gateway" "nat_gateway" {
     Name = "demo_nat_gateway"
   }
 }
-
